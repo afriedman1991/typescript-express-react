@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import * as Scroll from 'react-scroll';
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 
 const style = {
   height: window.innerHeight,
@@ -8,10 +10,8 @@ const style = {
   padding: 8
 };
 
-const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop);
-
 const App = (): JSX.Element => {
-  const [items, setItems] = useState(Array.from([1,2,3, 4]));
+  const [items, setItems] = useState(Array.from([1,2,3,4]));
   const [more, setMore] = useState(true);
 
   const fetchMoreData = () => {
@@ -25,7 +25,19 @@ const App = (): JSX.Element => {
       items.concat(Array.from({ length: 3 }));
     }, 500);
   };
- 
+
+  const scrollToTop = () => {
+    scroll.scrollToTop();
+  }
+
+  const scrollTo = () => {
+      scroll.scrollTo(window.innerHeight + 18);
+  }
+
+  const scrollMore = () => {
+    scroll.scrollMore(window.innerHeight + 18);
+  }
+
   return (
     <div>
       <InfiniteScroll
@@ -39,11 +51,34 @@ const App = (): JSX.Element => {
           </p>
         }
       >
-        {items.map((i, index) => (
-          <div style={style} key={index}>
-            div - #{index}
-          </div>
-        ))}
+        {items.map((i, index) => {
+          console.log(i);
+          if (index === 3) {
+            console.log('Hit last');
+            return (
+              <div style={style} key={index}>
+                div - #{index}
+                <button onClick={scrollToTop}>Scroll To Top</button>
+              </div>
+            )
+          }
+
+          if (index === 0) {
+            return (
+              <div style={style} key={index}>
+                div - #{index}
+                <button onClick={scrollTo}>Scroll</button>
+              </div>
+            )
+          } else {
+            return(
+              <div style={style} key={index}>
+                div - #{index}
+                <button onClick={scrollMore}>Keep Scrolling</button>
+              </div>
+            )
+          }
+        })}
       </InfiniteScroll>
     </div>
   );
