@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import * as Scroll from 'react-scroll';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 
 const style = {
   height: window.innerHeight,
@@ -11,7 +10,7 @@ const style = {
 };
 
 const App = (): JSX.Element => {
-  const [items, setItems] = useState(Array.from([1,2,3,4]));
+  const [items] = useState(Array.from([1,2,3,4]));
   const [more, setMore] = useState(true);
 
   const fetchMoreData = () => {
